@@ -1,15 +1,22 @@
 #include "chamber.h"
 
 Chamber::Chamber(){
-    connectors = doorways;
+    setCells(new ResizeableCellArray);
+    setUnoccupiedCells(new ResizeableCellArray);
+    doorways = new ResizeableArray<Doorway>;
+    setConnectors((ResizeableArray<Connector>*) doorways);
+    walls = new ResizeableArray<Wall>;
+    enemies = new ResizeableArray<EnemyCharacter>;
+    potions = new ResizeableArray<Potion>;
+    goldPiles = new ResizeableArray<GoldPile>;
 }
 
 void Chamber::addDoorway(Doorway *doorway){
-    connectors->add(doorway);
+    addConnector(doorway);
 }
 
 void Chamber::addWall(Wall *wall){
-    cells->add(wall);
+    addCell(wall);
     walls->add(wall);
 }
 
@@ -23,6 +30,14 @@ ResizeableArray<Potion>* Chamber::getPotions(){
 
 ResizeableArray<GoldPile>* Chamber::getGoldPiles(){
     return goldPiles;
+}
+
+ResizeableArray<Doorway>* Chamber::getDoorways(){
+    return doorways;
+}
+
+ResizeableArray<Wall>* Chamber::getWalls(){
+    return walls;
 }
 
 void Chamber::addEnemy(EnemyCharacter* enemy, Cell* cell){
@@ -41,4 +56,14 @@ void Chamber::addGoldPile(GoldPile* goldPile, Cell* cell){
     goldPiles->add(goldPile);
     cell->setEntity(goldPile);
     goldPile->setCell(cell);
+}
+
+int Chamber::getNumberOfEnemies(){
+    return enemies->getNumberOfElements();
+}
+
+void Chamber::appendChamber(Chamber* chamber){
+    appendOpenSpace(chamber);
+    doorways->append(chamber->getDoorways());
+    walls->append(chamber->getWalls());
 }

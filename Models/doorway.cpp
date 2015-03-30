@@ -1,8 +1,10 @@
 #include "doorway.h"
 
-Doorway::Doorway(){}
+Doorway::Doorway():Connector(){}
 
 Doorway::Doorway(Chamber *chamber, Passageway *passageway):Connector(chamber, passageway){}
+
+Doorway::Doorway(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter):Connector(rowCoordinate, columnCoordinate, terminalDisplayCharacter){}
 
 Chamber* Doorway::getChamber(){
     return chamber;

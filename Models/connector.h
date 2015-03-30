@@ -12,6 +12,7 @@ class Connector : public Cell {
 public:
     Connector();
     Connector(OpenSpace* connectedOpenSpace1, OpenSpace* connectedOpenSpace2);
+    Connector(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter);
     void setConnectedOpenSpace1(OpenSpace* openSpace);
     OpenSpace* getConnectedOpenSpace1();
     void setConnectedOpenSpace2(OpenSpace* openSpace);

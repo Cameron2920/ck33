@@ -5,6 +5,7 @@ class Orc : public PlayableCharacter
 {
 public:
     Orc();
+    virtual void collectGoldPile(GoldPile* goldPile);
 };
 
 #endif // ORC_H

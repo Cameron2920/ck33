@@ -7,22 +7,36 @@ class Connector;
 #include "connector.h"
 #endif
 
-#include "resizeablearray.h"
+#include "resizeablecellarray.h"
+#include "wall.h"
 
+#include <typeinfo>
 #include <iostream>
 
 class OpenSpace {
 public:
     OpenSpace();
     OpenSpace(int cellsCapacity);
+    ~OpenSpace();
     void addConnector(Connector* connector);
     bool isContainingCell(Cell* cell);
     void addCell(Cell* cell);
-    int getNumberOfEntities();
-    Cell** getUnoccupiedCells();
-    ResizeableArray<Cell>* getCells();
+    ResizeableCellArray* getUnoccupiedCells();
+    void setUnoccupiedCells(ResizeableCellArray* cells);
+    ResizeableCellArray* getCells();
+    void setCells(ResizeableCellArray* cells);
+    ResizeableArray<Connector>* getConnectors();
+    void setConnectors(ResizeableArray<Connector>* connectors);
+    bool isCellConnected(Cell* cell);
+    bool isOpenSpaceConnected(OpenSpace* openSpace);
+    int maxColumnCoordinate();
+    int maxRowCoordinate();
+    Cell* findCellByCoordinates(int rowCoordinate, int columnCoordinate);
+    void setCellEntity(Cell* cell, Entity* entity);
+    void appendOpenSpace(OpenSpace*oOpenSpace);
 private:
-    ResizeableArray<Cell>* cells;
+    ResizeableCellArray* cells;
+    ResizeableCellArray* unoccupiedCells;
     ResizeableArray<Connector>* connectors;
 };
 

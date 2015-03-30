@@ -2,7 +2,7 @@
 
 ArtificialIntelligence::ArtificialIntelligence(){}
 
-void ArtificialIntelligence::simulateEnemyCharacter(MoveableCharacter* enemyCharacter, MoveableCharacter* targetCharacter, Rules* rules, Floor* floor){
+void ArtificialIntelligence::simulateEnemyCharacter(EnemyCharacter* enemyCharacter, MoveableCharacter* targetCharacter, Rules* rules, Floor* floor){
     if(rules->canCharacterAttackCharacter(enemyCharacter, targetCharacter)){
         enemyCharacter->attackCharacter(targetCharacter, rules->calculateDamageGivenFromCharacterToCharacter(enemyCharacter, targetCharacter));
     }
@@ -11,22 +11,11 @@ void ArtificialIntelligence::simulateEnemyCharacter(MoveableCharacter* enemyChar
     }
 }
 
-void ArtificialIntelligence::simulateEnemyCharacterMove(MoveableCharacter *enemyCharacter, Rules* rules, Floor* floor){
-    int numberOfAvailableNeighbourCells = 0;
+void ArtificialIntelligence::simulateEnemyCharacterMove(EnemyCharacter *enemyCharacter, Rules* rules, Floor* floor){
     Cell* enemyCharacterCell = enemyCharacter->getCell();
-    Cell** availableNeighbourCells = new Cell*[MAX_NUMBER_OF_CELL_NEIGHBOURS];
+    ResizeableCellArray* unoccupiedNeighbourCells = enemyCharacterCell->getUnoccupiedCellNeigbours();
 
-    for(int neighbourCellIndex = 0; neighbourCellIndex < enemyCharacterCell->getNumberOfNeighbours(); neighbourCellIndex++){
-        Cell* neighbourCell = enemyCharacterCell->getCellNeigbourAt(neighbourCellIndex);
-
-        if(rules->canEnemyPlayerMoveToCell(enemyCharacter, neighbourCell, floor)){
-            availableNeighbourCells[numberOfAvailableNeighbourCells] = neighbourCell;
-            numberOfAvailableNeighbourCells++;
-        }
+    if(unoccupiedNeighbourCells->getNumberOfElements() > 0){
+        enemyCharacter->moveToCell(unoccupiedNeighbourCells->getAt(rand() % unoccupiedNeighbourCells->getNumberOfElements()));
     }
-
-    if(numberOfAvailableNeighbourCells > 0){
-        enemyCharacter->moveToCell(availableNeighbourCells[rand() % numberOfAvailableNeighbourCells]);
-    }
-    delete [] availableNeighbourCells;
 }

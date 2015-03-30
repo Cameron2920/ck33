@@ -1,4 +1,4 @@
-#ifndef POTION_H
+ #ifndef POTION_H
 #define POTION_H
 
 #ifdef CHARACTER_H
@@ -7,7 +7,7 @@ class Character;
 #include "character.h"
 #endif
 
-class Potion : public Entity{
+class Potion : public Entity {
 public:
     enum EffectedAttribute { AttackPoints, DefensePoints, HealthPoints };
     Potion();

@@ -18,6 +18,7 @@ class Doorway : public Connector {
 public:
     Doorway();
     Doorway(Chamber* chamber, Passageway* passageway);
+    Doorway(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter);
     void setChamber(Chamber* chamber);
     Chamber* getChamber();
     void setPassageway(Passageway* passageway);

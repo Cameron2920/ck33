@@ -10,9 +10,9 @@ class ArtificialIntelligence
 {
 public:
     ArtificialIntelligence();
-    void simulateEnemyCharacter(MoveableCharacter* enemyCharacter, MoveableCharacter* targetCharacter, Rules* rules, Floor* floor);
+    void simulateEnemyCharacter(EnemyCharacter* enemyCharacter, MoveableCharacter* targetCharacter, Rules* rules, Floor* floor);
 private:
-    void simulateEnemyCharacterMove(MoveableCharacter* enemyCharacter, Rules* rules, Floor* floor);
+    void simulateEnemyCharacterMove(EnemyCharacter* enemyCharacter, Rules* rules, Floor* floor);
 };
 
 #endif // ARTIFICIALINTELLIGENCE_H

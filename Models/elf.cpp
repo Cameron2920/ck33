@@ -2,7 +2,7 @@
 
 Elf::Elf():PlayableCharacter(140 ,30, 10, Character::Elf){}
 
-void PlayableCharacter::applyPotionEffect(Potion *potion){
+void Elf::applyPotionEffect(Potion *potion){
     if(potion->getEffectedAttribute() == Potion::HealthPoints){
         this->setHealthPoints(this->getHealthPoints() + std::abs(potion->getEffectAmount()));
     }
@@ -14,7 +14,7 @@ void PlayableCharacter::applyPotionEffect(Potion *potion){
     }
 }
 
-void PlayableCharacter::unapplyPotionEffect(Potion *potion){
+void Elf::unapplyPotionEffect(Potion *potion){
     if(potion->getEffectedAttribute() == Potion::HealthPoints){
         this->setHealthPoints(this->getHealthPoints() - std::abs(potion->getEffectAmount()));
     }

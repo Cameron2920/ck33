@@ -4,6 +4,7 @@
 class GoldPile : public Entity{
 public:
     GoldPile();
+    enum Type { Normal, SmallHorde, MerchantHorde, DragonHorde };
     GoldPile(int value);
     int getValue();
     void setValue(int value);

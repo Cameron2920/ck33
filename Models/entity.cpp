@@ -1,7 +1,8 @@
 #include "entity.h"
 
-Entity::Entity(){
-}
+Entity::Entity(){}
+
+Entity::Entity(char terminalDisplayCharacter):terminalDisplayCharacter(terminalDisplayCharacter){}
 
 Entity::~Entity(){
     if(cell){

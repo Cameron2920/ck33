@@ -2,7 +2,7 @@
 
 Orc::Orc():PlayableCharacter(180, 30, 35, Character::Orc){}
 
-void PlayableCharacter::collectGoldPile(GoldPile *goldPile){
-    valueOfGoldCollected += (goldPile->getValue() / 2);
+void Orc::collectGoldPile(GoldPile *goldPile){
+    setValueOfGoldCollected(getValueOfGoldCollected() + (goldPile->getValue() / 2));
     delete goldPile;
 }

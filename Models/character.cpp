@@ -3,6 +3,7 @@
 Character::Character(){}
 
 Character::Character(int healthPoints, int defensePoints, int attackPoints, Race race):healthPoints(healthPoints), defensePoints(defensePoints),attackPoints(attackPoints),race(race){}
+
 int Character::getHealthPoints(){
     return healthPoints;
 }

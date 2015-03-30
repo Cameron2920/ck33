@@ -9,7 +9,7 @@ class Potion;
 #endif
 
 #include "goldpile.h"
-#include "resizeablearray.h"
+#include "resizeablearray.t.hpp"
 
 class PlayableCharacter : public MoveableCharacter {
 public:
@@ -20,6 +20,8 @@ public:
     void digestPotions();
     void incrementNumberOfCompletedFloors();
     int getNumberOfCompletedFloors();
+    void setValueOfGoldCollected(int valueOfGoldCollected);
+    int getValueOfGoldCollected();
 private:
     bool hasAttackedMerchant;
     ResizeableArray<Potion>* consumedPotions;
@@ -27,6 +29,8 @@ private:
     virtual void applyPotionEffect(Potion* potion);
     virtual void unapplyPotionEffect(Potion* potion);
     int numberOfCompletedFloors;
+
+    friend std::ostream& operator<<(std::ostream& os, PlayableCharacter* player);
 };
 
 #endif // PLAYABLECHARACTER_H

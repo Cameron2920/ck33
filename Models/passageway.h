@@ -12,8 +12,10 @@ class Doorway;
 class Passageway : public OpenSpace {
 public:
     Passageway();
+    void appendPassageway(Passageway* passageway);
+    ResizeableArray<Doorway>* getDoorways();
 private:
-    Doorway** doorways;
+    ResizeableArray<Doorway>* doorways;
 };
 
 #endif // PASSAGEWAY_H

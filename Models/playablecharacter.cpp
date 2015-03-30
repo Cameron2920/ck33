@@ -2,7 +2,8 @@
 
 PlayableCharacter::PlayableCharacter(){}
 
-PlayableCharacter::PlayableCharacter(int healthPoints, int defensePoints, int attackPoints, Race race):MoveableCharacter(healthPoints, defensePoints, attackPoints, race), hasAttackedMerchant(false){}
+PlayableCharacter::PlayableCharacter(int healthPoints, int defensePoints, int attackPoints, Race race):MoveableCharacter(healthPoints, defensePoints, attackPoints, race),
+    hasAttackedMerchant(false), valueOfGoldCollected(0), numberOfCompletedFloors(0){}
 
 void PlayableCharacter::consumePotion(Potion *potion){
     applyPotionEffect(potion);
@@ -14,7 +15,7 @@ void PlayableCharacter::collectGoldPile(GoldPile *goldPile){
 }
 
 void PlayableCharacter::digestPotions(){
-    for(int potionIndex = 0; potionIndex < numberOfConsumedPotions; potionIndex++){
+    for(int potionIndex = 0; potionIndex < consumedPotions->getNumberOfElements(); potionIndex++){
         Potion* potion = consumedPotions->getAt(consumedPotions->getNumberOfElements() - 1);
         unapplyPotionEffect(potion);
         consumedPotions->remove(potion);
@@ -43,4 +44,24 @@ void PlayableCharacter::unapplyPotionEffect(Potion* potion){
     else if(potion->getEffectedAttribute() == Potion::DefensePoints){
         this->setDefensePoints(this->getDefensePoints() - potion->getEffectAmount());
     }
+}
+
+void PlayableCharacter::setValueOfGoldCollected(int valueOfGoldCollected){
+    this->valueOfGoldCollected = valueOfGoldCollected;
+}
+
+int PlayableCharacter::getValueOfGoldCollected(){
+    return valueOfGoldCollected;
+}
+
+int PlayableCharacter::getNumberOfCompletedFloors(){
+    return numberOfCompletedFloors;
+}
+
+std::ostream& operator<<(std::ostream& os, PlayableCharacter* player){
+    os << "Gold: " << player->getValueOfGoldCollected() << "             " << "Floor " << player->getNumberOfCompletedFloors() + 1 << std::endl;
+    os << "HP: "<< player->getHealthPoints() << std::endl;
+    os << "Atk: " << player->getAttackPoints() << std::endl;
+    os << "Def: " << player->getDefensePoints() << std::endl;
+    return os;
 }

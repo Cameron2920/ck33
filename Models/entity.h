@@ -12,8 +12,9 @@ class Cell;
 class Entity {
 public:
     Entity();
+    Entity(char terminalDisplayCharacter);
     Cell* getCell();
-    ~Entity();
+    virtual ~Entity();
     void setCell(Cell* cell);
     char getTerminalDisplayCharacter();
     void setTerminalDisplayCharacter(char terminalDisplayCharacter);

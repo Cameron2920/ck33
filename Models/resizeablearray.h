@@ -7,11 +7,14 @@ public:
     ResizeableArray();
     ResizeableArray(int elementsCapacity);
     ~ResizeableArray();
-    void add(Element* t);
+    virtual void add(Element* t);
     void remove(Element* t);
-    Element* pop(Element* t);
+    virtual Element* pop(Element* t);
+    void popAll();
     int getNumberOfElements();
     Element* getAt(int index);
+    void setAt(Element* element, int index);
+    void append(ResizeableArray<Element>* resizeableArray);
 private:
     Element** elements;
     int numberOfElements;

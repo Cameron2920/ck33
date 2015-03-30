@@ -5,7 +5,7 @@
 #include "potion.h"
 #include "goldpile.h"
 #include "wall.h"
-#include "resizeablearray.h"
+#include "resizeablearray.t.hpp"
 
 #ifdef DOORWAY_H
 class Doorway;
@@ -16,14 +16,18 @@ class Doorway;
 class Chamber : public OpenSpace{
 public:
     Chamber();
-    EnemyCharacter** getEnemies();
     int getNumberOfEnemies();
-    void addEnemy(EnemyCharacter* enemy);
-    void addPotion(Potion* potion);
-    void addGoldPile(GoldPile* goldPile);
+    void addEnemy(EnemyCharacter* enemy, Cell* cell);
+    void addPotion(Potion* potion, Cell* cell);
+    void addGoldPile(GoldPile* goldPile, Cell* cell);
+    void addWall(Wall* wall);
+    void addDoorway(Doorway* doorway);
     ResizeableArray<EnemyCharacter>* getEnemies();
     ResizeableArray<Potion>* getPotions();
     ResizeableArray<GoldPile>* getGoldPiles();
+    ResizeableArray<Doorway>* getDoorways();
+    ResizeableArray<Wall>* getWalls();
+    void appendChamber(Chamber* chamber);
 private:
     ResizeableArray<EnemyCharacter>* enemies;
     ResizeableArray<Potion>* potions;

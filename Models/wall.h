@@ -7,6 +7,7 @@
 class Wall : public Cell {
 public:
     Wall();
+    Wall(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter);
 };
 
 #endif // WALL_H
