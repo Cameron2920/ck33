@@ -1,0 +1,7 @@
+MODELS_FILE_PATH = ../../../
+
+all:
+	g++ -I $(MODELS_FILE_PATH) -c moveablecharacter.cpp
+
+clean:
+	rm *.o
