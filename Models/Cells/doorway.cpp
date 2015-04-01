@@ -1,13 +1,13 @@
 #include "doorway.h"
 
-Doorway::Doorway():Connector(),passageway(0),chamber(0){
+Doorway::Doorway():Connector(), chamber(0), passageway(0){
     setConnectedOpenSpace1(0);
     setConnectedOpenSpace2(0);
 }
 
 Doorway::Doorway(Chamber *chamber, Passageway *passageway):Connector(chamber, passageway){}
 
-Doorway::Doorway(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter):Connector(rowCoordinate, columnCoordinate, terminalDisplayCharacter),passageway(0),chamber(0){
+Doorway::Doorway(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter):Connector(rowCoordinate, columnCoordinate, terminalDisplayCharacter), chamber(0), passageway(0){
     setConnectedOpenSpace1(0);
     setConnectedOpenSpace2(0);
 }

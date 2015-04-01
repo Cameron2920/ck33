@@ -4,7 +4,12 @@ ArtificialIntelligence::ArtificialIntelligence(){}
 
 void ArtificialIntelligence::simulateEnemyCharacter(EnemyCharacter* enemyCharacter, MoveableCharacter* targetCharacter, Rules* rules, Floor* floor){
     if(rules->canCharacterAttackCharacter(enemyCharacter, targetCharacter)){
-        enemyCharacter->attackCharacter(targetCharacter, rules->calculateDamageGivenFromCharacterToCharacter(enemyCharacter, targetCharacter));
+        if(rules->didCharacterHitCharacter(enemyCharacter, targetCharacter)){
+            enemyCharacter->attackCharacter(targetCharacter, rules->calculateDamageGivenFromCharacterToCharacter(enemyCharacter, targetCharacter));
+        }
+        else{
+            return;
+        }
     }
     else{
         simulateEnemyCharacterMove(enemyCharacter, rules, floor);

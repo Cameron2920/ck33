@@ -18,8 +18,8 @@ public:
     void attackCharacter(Character* character, int damagePoints);
 private:
     int healthPoints;
-    int attackPoints;
     int defensePoints;
+    int attackPoints;
     Race race;
 };
 

@@ -41,10 +41,10 @@ public:
     bool isOccupiable();
 
 private:
-    bool canBeOccupied;
     Entity* entity;
     int rowCoordinate;
     int columnCoordinate;
+    bool canBeOccupied;
     ResizeableCellArray* cellNeighbours;
     ResizeableCellArray* unoccupiedCellNeighbours;
     char terminalDisplayCharacter;

@@ -4,10 +4,10 @@
 #include "resizeablearray.h"
 
 template <class Element>
-ResizeableArray<Element>::ResizeableArray():elementsCapacity(0), elements(0), numberOfElements(0){}
+ResizeableArray<Element>::ResizeableArray():elements(0), numberOfElements(0), elementsCapacity(0){}
 
 template <class Element>
-ResizeableArray<Element>::ResizeableArray(int elementsCapacity):elementsCapacity(elementsCapacity), numberOfElements(0){
+ResizeableArray<Element>::ResizeableArray(int elementsCapacity):numberOfElements(0), elementsCapacity(elementsCapacity){
     elements = new Element*[elementsCapacity];
 }
 

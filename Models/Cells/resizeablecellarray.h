@@ -20,8 +20,8 @@ public:
     Cell* findByCoordinates(int rowCoordinate, int columnCoordinate);
     void orderByCoordinates();
 private:
-    int maxColumnCoordinate;
     int maxRowCoordinate;
+    int maxColumnCoordinate;
     int findMaxColumnCoordinate();
     int findMaxRowCoordinate();
 };

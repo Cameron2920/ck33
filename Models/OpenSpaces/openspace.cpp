@@ -89,14 +89,14 @@ int OpenSpace::maxRowCoordinate(){
 }
 
 Cell* OpenSpace::findCellByCoordinates(int rowCoordinate, int columnCoordinate){
-    cells->findByCoordinates(rowCoordinate, columnCoordinate);
+    return cells->findByCoordinates(rowCoordinate, columnCoordinate);
 }
 
 ResizeableCellArray* OpenSpace::getUnoccupiedCells(){
     return unoccupiedCells;
 }
 
-void OpenSpace::setUnoccupiedCells(ResizeableCellArray *cells){
+void OpenSpace::setUnoccupiedCells(ResizeableCellArray *unoccupiedCells){
     this->unoccupiedCells = unoccupiedCells;
 }
 

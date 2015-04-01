@@ -7,31 +7,6 @@ Floor::Floor(){
     enemyCells = new ResizeableCellArray;
 }
 
-Floor::~Floor(){
-    ResizeableCellArray* allCells = new ResizeableCellArray;
-    for(int chamberIndex = 0; chamberIndex < chambers->getNumberOfElements(); chamberIndex++){
-        allCells->merge(chambers->getAt(chamberIndex)->getCells());
-        chambers->getAt(chamberIndex)->removeAllEntities();
-        delete chambers->getAt(chamberIndex);
-    }
-    for(int passagewayIndex = 0; passagewayIndex < passageways->getNumberOfElements(); passagewayIndex++){
-        allCells->merge(passageways->getAt(passagewayIndex)->getCells());
-        delete passageways->getAt(passagewayIndex);
-    }
-
-    for(int allCellsIndex = 0; allCellsIndex < allCells->getNumberOfElements(); allCellsIndex++){
-        delete allCells->getAt(allCellsIndex);
-    }
-
-
-    delete allCells;
-    delete ladder;
-    delete passageways;
-    delete chambers;
-    delete unfilledChambers;
-    delete enemyCells;
-}
-
 Floor::Floor(std::string filename){
     chambers = new ResizeableArray<Chamber>;
     unfilledChambers = new ResizeableArray<Chamber>;
@@ -47,7 +22,7 @@ Floor::Floor(std::string filename){
         std::string currentLineString;
         getline(inputFile, currentLineString);
         columnCoordinate = 0;
-        while(currentCharacterIndex < currentLineString.length()){
+        while(currentCharacterIndex < (int) currentLineString.length()){
             currentCharacter = currentLineString.at(currentCharacterIndex);
             switch(currentCharacter){
             case '|':
@@ -73,6 +48,32 @@ Floor::Floor(std::string filename){
     }
     mergeConnectedChambers();
     mergeConnectedPassageWays();
+}
+
+
+Floor::~Floor(){
+    ResizeableCellArray* allCells = new ResizeableCellArray;
+    for(int chamberIndex = 0; chamberIndex < chambers->getNumberOfElements(); chamberIndex++){
+        allCells->merge(chambers->getAt(chamberIndex)->getCells());
+        chambers->getAt(chamberIndex)->removeAllEntities();
+        delete chambers->getAt(chamberIndex);
+    }
+    for(int passagewayIndex = 0; passagewayIndex < passageways->getNumberOfElements(); passagewayIndex++){
+        allCells->merge(passageways->getAt(passagewayIndex)->getCells());
+        delete passageways->getAt(passagewayIndex);
+    }
+
+    for(int allCellsIndex = 0; allCellsIndex < allCells->getNumberOfElements(); allCellsIndex++){
+        delete allCells->getAt(allCellsIndex);
+    }
+
+
+    delete allCells;
+    delete ladder;
+    delete passageways;
+    delete chambers;
+    delete unfilledChambers;
+    delete enemyCells;
 }
 
 Chamber* Floor::findContainingChamber(Cell *cell){

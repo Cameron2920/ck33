@@ -5,12 +5,12 @@ Cell::Cell():entity(0),canBeOccupied(true){
     unoccupiedCellNeighbours = new ResizeableCellArray(MAX_NUMBER_OF_CELL_NEIGHBOURS);
 }
 
-Cell::Cell(int rowCoordinate, int columnCoordinate):rowCoordinate(rowCoordinate), columnCoordinate(columnCoordinate), entity(0), canBeOccupied(true){
+Cell::Cell(int rowCoordinate, int columnCoordinate):entity(0),rowCoordinate(rowCoordinate), columnCoordinate(columnCoordinate), canBeOccupied(true){
     cellNeighbours = new ResizeableCellArray(MAX_NUMBER_OF_CELL_NEIGHBOURS);
     unoccupiedCellNeighbours = new ResizeableCellArray(MAX_NUMBER_OF_CELL_NEIGHBOURS);
 }
 
-Cell::Cell(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter):rowCoordinate(rowCoordinate), columnCoordinate(columnCoordinate), terminalDisplayCharacter(terminalDisplayCharacter), entity(0), canBeOccupied(true){
+Cell::Cell(int rowCoordinate, int columnCoordinate, char terminalDisplayCharacter):entity(0),rowCoordinate(rowCoordinate), columnCoordinate(columnCoordinate), canBeOccupied(true), terminalDisplayCharacter(terminalDisplayCharacter){
     cellNeighbours = new ResizeableCellArray(MAX_NUMBER_OF_CELL_NEIGHBOURS);
     unoccupiedCellNeighbours = new ResizeableCellArray(MAX_NUMBER_OF_CELL_NEIGHBOURS);
 }

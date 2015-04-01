@@ -6,7 +6,7 @@ class ResizeableArray {
 public:
     ResizeableArray();
     ResizeableArray(int elementsCapacity);
-    ~ResizeableArray();
+    virtual ~ResizeableArray();
     virtual void add(Element* t);
     void remove(Element* t);
     virtual Element* pop(Element* t);

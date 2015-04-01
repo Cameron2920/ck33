@@ -11,9 +11,10 @@ void ResizeableCellArray::add(Cell *cell){
 }
 
 Cell* ResizeableCellArray::pop(Cell *cell){
-    ResizeableArray<Cell>::pop(cell);
+    Cell* foundCell = ResizeableArray<Cell>::pop(cell);
     maxRowCoordinate = findMaxColumnCoordinate();
     maxColumnCoordinate = findMaxRowCoordinate();
+    return foundCell;
 }
 
 int ResizeableCellArray::findMaxColumnCoordinate(){
