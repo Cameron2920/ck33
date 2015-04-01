@@ -8,7 +8,7 @@ bool Rules::canPlayerMoveToCell(PlayableCharacter *character, Cell *cell, Floor 
     Cell* characterCell = character->getCell();
     if(!dynamic_cast<Wall*>(cell) && cell->isInCellNeighbours(characterCell)){
         Entity* entity = cell->getEntity();
-        if(!entity || (dynamic_cast<GoldPile*>(entity) && canPlayerCollectGoldPile(character, (GoldPile*) entity, floor))){
+        if(!entity || (dynamic_cast<GoldPile*>(entity) || dynamic_cast<Ladder*>(entity))){
             return true;
         }
     }
@@ -17,8 +17,8 @@ bool Rules::canPlayerMoveToCell(PlayableCharacter *character, Cell *cell, Floor 
 
 bool Rules::canEnemyPlayerMoveToCell(EnemyCharacter *character, Cell *cell, Floor *floor){
     Cell* characterCell = character->getCell();
-    if(typeid(*cell) != typeid(Wall) && typeid(*cell) != typeid(Connector) &&
-            typeid(*character) != typeid(Dragon) && cell->isNeighbourCell(characterCell) && floor->findContainingChamber(characterCell) == floor->findContainingChamber(cell)){
+    if(!dynamic_cast<Connector*>(cell) && !dynamic_cast<Wall*>(cell) &&
+            !dynamic_cast<Dragon*>(character) && cell->isNeighbourCell(characterCell) && floor->findContainingChamber(characterCell) == floor->findContainingChamber(cell)){
         Entity* entity = cell->getEntity();
         if(!entity){
             return true;
@@ -32,7 +32,7 @@ bool Rules::hasPlayerWon(PlayableCharacter *player){
 }
 
 bool Rules::hasPlayerCompletedFloor(PlayableCharacter *player, Floor *floor){
-//    return player->getCell() == floor->getLadder();
+   return floor->getHasLadderBeenClimbed();
 }
 
 bool Rules::hasPlayerLost(PlayableCharacter *player){
@@ -40,14 +40,19 @@ bool Rules::hasPlayerLost(PlayableCharacter *player){
 }
 
 bool Rules::canCharacterAttackCharacter(Character *attacker, Character *target){
-    return attacker->getCell()->isNeighbourCell(target->getCell());
+    Cell* attackerCell = attacker->getCell(), *targetCell = target->getCell();
+    if(dynamic_cast<Merchant*>(attacker) && dynamic_cast<PlayableCharacter*>(target) && !dynamic_cast<PlayableCharacter*>(target)->getHasAttackedMerchant()){
+        return false;
+    }
+    if(dynamic_cast<Dragon*>(attacker) && dynamic_cast<Dragon*>(attacker)->getGoldPile()->getCell()->isInCellNeighbours(targetCell)){
+        return false;
+    }
+    return attackerCell->isInCellNeighbours(targetCell);
 }
 
 bool Rules::didCharacterHitCharacter(Character *attacker, Character *target){
-    if(typeid(*attacker) != typeid(PlayableCharacter)){
-        if(rand() % 10 >= 5){
-            return false;
-        }
+    if(dynamic_cast<EnemyCharacter*>(attacker) && rand() % 10 >= 5){
+        return false;
     }
     return true;
 
@@ -55,13 +60,12 @@ bool Rules::didCharacterHitCharacter(Character *attacker, Character *target){
 
 bool Rules::canPlayerCollectGoldPile(Character *character, GoldPile *goldPile, Floor *floor){
     Chamber* goldPileContainingOpenSpace = floor->findContainingChamber(goldPile->getCell());
-    ResizeableArray<EnemyCharacter>* enemies = goldPileContainingOpenSpace->getEnemies();
-    for(int enemyIndex = 0; enemyIndex < goldPileContainingOpenSpace->getNumberOfEnemies(); enemyIndex++){
-        if(typeid(enemies->getAt(enemyIndex)) == typeid(Dragon) && ((Dragon*)enemies->getAt(enemyIndex))->getGoldPile() == goldPile){
-            return false;
+    for(int goldPileIndex = 0; goldPileIndex < goldPileContainingOpenSpace->getNumberOfEnemies(); goldPileIndex++){
+        if(goldPileContainingOpenSpace->getGoldPiles()->getAt(goldPileIndex) == goldPile){
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 int Rules::calculateDamageGivenFromCharacterToCharacter(Character *attacker, Character *target){

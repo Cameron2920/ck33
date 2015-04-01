@@ -76,6 +76,16 @@ Element* ResizeableArray<Element>::pop(Element* element){
 }
 
 template <class Element>
+bool ResizeableArray<Element>::containsElement(Element* element){
+    for(int elementIndex = 0; elementIndex < numberOfElements; elementIndex++){
+        if(elements[elementIndex] == element){
+            return true;
+        }
+    }
+    return false;
+}
+
+template <class Element>
 void ResizeableArray<Element>::popAll(){
     numberOfElements = 0;
 }
@@ -105,6 +115,20 @@ void ResizeableArray<Element>::append(ResizeableArray<Element> *resizeableArray)
     for(int elementIndex = 0; elementIndex < resizeableArray->getNumberOfElements(); elementIndex++){
         add(resizeableArray->getAt(elementIndex));
     }
+}
+
+template <class Element>
+void ResizeableArray<Element>::merge(ResizeableArray<Element> *resizeableArray){
+    for(int elementIndex = 0; elementIndex < resizeableArray->getNumberOfElements(); elementIndex++){
+        pop(resizeableArray->getAt(elementIndex));
+        add(resizeableArray->getAt(elementIndex));
+    }
+}
+
+template <class Element>
+void ResizeableArray<Element>::merge(Element* element){
+    pop(element);
+    add(element);
 }
 
 #endif // RESIZEABLEARRAY_T_HPP

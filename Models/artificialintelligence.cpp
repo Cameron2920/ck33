@@ -16,6 +16,9 @@ void ArtificialIntelligence::simulateEnemyCharacterMove(EnemyCharacter *enemyCha
     ResizeableCellArray* unoccupiedNeighbourCells = enemyCharacterCell->getUnoccupiedCellNeigbours();
 
     if(unoccupiedNeighbourCells->getNumberOfElements() > 0){
-        enemyCharacter->moveToCell(unoccupiedNeighbourCells->getAt(rand() % unoccupiedNeighbourCells->getNumberOfElements()));
+        Cell* newCell = unoccupiedNeighbourCells->getAt(rand() % unoccupiedNeighbourCells->getNumberOfElements());
+        if(rules->canEnemyPlayerMoveToCell(enemyCharacter, newCell, floor)){
+            enemyCharacter->moveToCell(newCell);
+        }
     }
 }

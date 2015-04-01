@@ -1,16 +1,41 @@
 #include "floor.h"
 
 Floor::Floor(){
-    chambers = new ResizeableArray<Chamber>(0);
+    chambers = new ResizeableArray<Chamber>;
     unfilledChambers = new ResizeableArray<Chamber>;
-    passageways = new ResizeableArray<Passageway>(0);
+    passageways = new ResizeableArray<Passageway>;
     enemyCells = new ResizeableCellArray;
 }
 
+Floor::~Floor(){
+    ResizeableCellArray* allCells = new ResizeableCellArray;
+    for(int chamberIndex = 0; chamberIndex < chambers->getNumberOfElements(); chamberIndex++){
+        allCells->merge(chambers->getAt(chamberIndex)->getCells());
+        chambers->getAt(chamberIndex)->removeAllEntities();
+        delete chambers->getAt(chamberIndex);
+    }
+    for(int passagewayIndex = 0; passagewayIndex < passageways->getNumberOfElements(); passagewayIndex++){
+        allCells->merge(passageways->getAt(passagewayIndex)->getCells());
+        delete passageways->getAt(passagewayIndex);
+    }
+
+    for(int allCellsIndex = 0; allCellsIndex < allCells->getNumberOfElements(); allCellsIndex++){
+        delete allCells->getAt(allCellsIndex);
+    }
+
+
+    delete allCells;
+    delete ladder;
+    delete passageways;
+    delete chambers;
+    delete unfilledChambers;
+    delete enemyCells;
+}
+
 Floor::Floor(std::string filename){
-    chambers = new ResizeableArray<Chamber>(0);
+    chambers = new ResizeableArray<Chamber>;
     unfilledChambers = new ResizeableArray<Chamber>;
-    passageways = new ResizeableArray<Passageway>(0);
+    passageways = new ResizeableArray<Passageway>;
     enemyCells = new ResizeableCellArray;
 
     std::ifstream inputFile(filename.c_str());
@@ -208,7 +233,13 @@ std::ostream& operator<<(std::ostream& os, Floor* floor){
         while(currentColumnCoordinate <= maxColumnCoordinate){
             Cell* cell = floor->findCellByCoordinates(currentRowCoordinate, currentColumnCoordinate);
             if(cell){
-                os << cell;
+                Potion* potion = dynamic_cast<Potion*>(cell->getEntity());
+                if(potion && !floor->getPlayer()->hasDiscoveredPotion(potion)){
+                    os << "P";
+                }
+                else{
+                    os << cell;
+                }
             }
             else{
                 os << " ";
@@ -267,7 +298,6 @@ void Floor::mergeConnectedChambers(){
         while(chamberIndex2 < chambers->getNumberOfElements() && chamberIndex1 < chambers->getNumberOfElements()){
             if(chamberIndex1 != chamberIndex2 && chambers->getAt(chamberIndex1)->isOpenSpaceConnected(chambers->getAt(chamberIndex2))){
                 chambers->getAt(chamberIndex1)->appendChamber(chambers->getAt(chamberIndex2));
-                chambers->getAt(chamberIndex2)->getCells()->popAll();
                 chambers->remove(chambers->getAt(chamberIndex2));
             }
             else{
@@ -286,7 +316,6 @@ void Floor::mergeConnectedPassageWays(){
         while(passagewayIndex2 < passageways->getNumberOfElements() && passagewayIndex1 < passageways->getNumberOfElements()){
             if(passagewayIndex2 != passagewayIndex1 && passageways->getAt(passagewayIndex1)->isOpenSpaceConnected(passageways->getAt(passagewayIndex2))){
                 passageways->getAt(passagewayIndex1)->appendPassageway(passageways->getAt(passagewayIndex2));
-                passageways->getAt(passagewayIndex2)->getCells()->popAll();
                 passageways->remove(passageways->getAt(passagewayIndex2));
             }
             else{
@@ -295,4 +324,24 @@ void Floor::mergeConnectedPassageWays(){
         }
         passagewayIndex1++;
     }
+}
+
+bool Floor::getHasLadderBeenClimbed(){
+    return hasLadderBeenClimbed;
+}
+
+void Floor::setHasLadderBeenClimbed(bool hasLadderBeenClimbed){
+    this->hasLadderBeenClimbed = hasLadderBeenClimbed;
+}
+
+PlayableCharacter* Floor::getPlayer(){
+    return player;
+}
+
+void Floor::setPlayer(PlayableCharacter *player){
+    this->player = player;
+}
+
+ResizeableArray<Chamber>* Floor::getChambers(){
+    return chambers;
 }

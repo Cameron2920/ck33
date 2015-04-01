@@ -1,12 +1,13 @@
 #ifndef RULES_H
 #define RULES_H
 
-#include "playablecharacter.h"
-#include "enemycharacter.h"
+#include "Entities/Characters/MoveableCharacters/PlayableCharacters/playablecharacter.h"
+#include "Entities/Characters/MoveableCharacters/EnemyCharacters/enemycharacter.h"
 #include "floor.h"
-#include "chamber.h"
-#include "goldpile.h"
-#include "dragon.h"
+#include "OpenSpaces/chamber.h"
+#include "Entities/goldpile.h"
+#include "Entities/Characters/MoveableCharacters/EnemyCharacters/dragon.h"
+#include "Entities/Characters/MoveableCharacters/EnemyCharacters/merchant.h"
 #include <math.h>
 #include <stdlib.h>
 #include <typeinfo>

@@ -15,6 +15,9 @@ public:
     Element* getAt(int index);
     void setAt(Element* element, int index);
     void append(ResizeableArray<Element>* resizeableArray);
+    void merge(ResizeableArray<Element>* resizeableArray);
+    void merge(Element* t);
+    bool containsElement(Element* t);
 private:
     Element** elements;
     int numberOfElements;

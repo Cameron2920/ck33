@@ -1,6 +1,6 @@
 #ifndef ARTIFICIALINTELLIGENCE_H
 #define ARTIFICIALINTELLIGENCE_H
-#include "moveablecharacter.h"
+#include "Entities/Characters/MoveableCharacters/moveablecharacter.h"
 #include "rules.h"
 #include "floor.h"
 #include <stdlib.h>
